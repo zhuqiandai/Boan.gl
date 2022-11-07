@@ -2,31 +2,42 @@ import { Nullable } from 'src/types/helper'
 import Scene from 'src/scene/Scene'
 
 class Engine {
-    private _canvas: Nullable<HTMLCanvasElement>
+    private _renderCanvas: Nullable<HTMLCanvasElement>
+    private _renderTarget: Nullable<WebGLProgram>
     private _context: WebGL2RenderingContext
+    private _scenes: Array<Scene>
 
     constructor(canvas?: HTMLCanvasElement) {
-        this._canvas = canvas ?? document.createElement('canvas')
+        this._renderCanvas = canvas ?? document.createElement('canvas')
+        this._renderTarget = null
 
         if (!canvas) {
-            document.body.appendChild(this._canvas)
-            this._canvas.style.width = '100%'
-            this._canvas.style.height = '100%'
+            document.body.appendChild(this._renderCanvas)
+            this._renderCanvas.style.width = '100%'
+            this._renderCanvas.style.height = '100%'
         }
 
-        const context = this._canvas.getContext('webgl2')
+        const context = this._renderCanvas.getContext('webgl2', {
+            antialias: true,
+            stencil: true,
+        })
 
         if (!context) {
             console.error('Your brower maybe not suppost webgl')
         }
 
         this._context = context as WebGL2RenderingContext
+
+        this._scenes = []
     }
 
     public get context() {
         return this._context
     }
 
+    /**
+     *  Core
+     */
     public renderLoop(draw: Function, scene: Scene) {
         console.log('built scene:', scene)
 
@@ -40,7 +51,7 @@ class Engine {
     }
 
     private initialize() {
-        const program = this.createProgram()
+        const program = this.createShaderProgram()
 
         const vertex = this._context.VERTEX_SHADER
         const vertexShader = this.createShader(vertex)
@@ -49,7 +60,10 @@ class Engine {
         const fragmentShader = this.createShader(fragment)
     }
 
-    private createProgram(): WebGLProgram {
+    /**
+     *  WebGL
+     */
+    private createShaderProgram(): WebGLProgram {
         const program = this._context.createProgram() as WebGLProgram
 
         if (!program) {
@@ -69,8 +83,23 @@ class Engine {
         return shader
     }
 
-    private createVertexShaderContext() {}
-    private createFragmentShaderContext() {}
+    private createVertexBuffer() {}
+
+    private createDynamicVertexBuffer() {}
+
+    private createIndexBuffer() {}
+
+    private createTexture() {}
+
+    private createDynamicTexture() {}
+
+    /**
+     *  Frame
+     */
+
+    public beginFrame() {}
+
+    public endFrame() {}
 }
 
 export default Engine
