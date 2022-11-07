@@ -1,3 +1,3 @@
-import BlackGL from 'src/core/BlackGL'
+class BlackGL {}
 
 export default BlackGL
