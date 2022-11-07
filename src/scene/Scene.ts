@@ -1,6 +1,6 @@
-import Engine from 'src/core/Engine'
-import Camera from 'src/cameras/Camera'
-import Light from 'src/lights/Light'
+import Engine from 'src/engine/Engine'
+import Camera from 'src/camera/Camera'
+import Light from 'src/light/Light'
 import BufferMesh from 'src/mesh/BufferMesh'
 
 class Scene {

@@ -1,5 +1,5 @@
 import { Nullable } from 'src/types/helper'
-import Scene from './Scene'
+import Scene from 'src/scene/Scene'
 
 class Engine {
     private _canvas: Nullable<HTMLCanvasElement>
