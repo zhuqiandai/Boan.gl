@@ -1,5 +1,4 @@
 const typescript = require('@rollup/plugin-typescript')
-const dts = require('rollup-plugin-dts')
 
 module.exports = {
     input: 'src/main.ts',
