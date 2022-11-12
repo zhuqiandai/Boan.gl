@@ -1,1 +1,0 @@
-function shaderLoader(path: string) {}
